@@ -1,0 +1,18 @@
+server:
+  port: 8088
+spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: false
+    properties:
+      hibernate:
+        format_sql: true
+application:
+  security:
+    jwt:
+      secret-key: cq1y2lrmFdifjk8GgqR9kEv8S5jgFoTGDIzeci8edwA=
+      expiration: 8640000
+  file:
+    uploads:
+      baseFolder: ./uploads
