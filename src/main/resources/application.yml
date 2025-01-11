@@ -11,3 +11,9 @@ springdoc:
 server:
   servlet:
     content-path: /api/v1/
+
+application:
+  security:
+    jwt:
+      accessTokenCookieName: accessToken
+      refreshTokenCookieName: refreshToken

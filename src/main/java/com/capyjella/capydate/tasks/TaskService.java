@@ -47,7 +47,7 @@ public class TaskService {
 
     public PageResponse<TaskResponse> getAllTasksInPeriod(Instant startTime, Instant endTime, Integer page, Integer size, User user) {
         Pageable pageable = PageRequest.of(page, size);
-        Page<Task> tasks = repository.findAllInPeriod(pageable, startTime.getEpochSecond(), endTime.getEpochSecond(), user.getId());
+        Page<Task> tasks = repository.findAllInPeriod(pageable, startTime.toEpochMilli(), endTime.toEpochMilli(), user.getId());
         List<TaskResponse> taskList = tasks.stream().map(mapper::toTaskResponse).toList();
         return new PageResponse<>(
                 taskList,

@@ -72,12 +72,16 @@ public class AsyncPopulateService {
                     .user(randomUser)
                     .createBy(randomUser.getId())
                     .createdDate(Instant.now().toEpochMilli())
+                    .date(Long.valueOf(0))
+                    .startTime(Long.valueOf(0))
+                    .endTime(Long.valueOf(0))
                     .build();
             if (Math.random() > 0.5) {
                 task.setDate(getRandomInstant().toEpochMilli());
             } else {
-                task.setStartTime(getRandomInstant().toEpochMilli());
-                task.setEndTime(getRandomInstant().plusSeconds(getRandomLong(12 * 3600)).toEpochMilli());
+                Instant start = getRandomInstant();
+                task.setStartTime(start.toEpochMilli());
+                task.setEndTime(start.plusSeconds(getRandomLong(12 * 3600)).toEpochMilli());
             }
             task = taskRepository.save(task);
             tasks.add(task);
@@ -100,16 +104,16 @@ public class AsyncPopulateService {
     }
 
     /**
-     * Get random instant between 30 days ago and 30 days later
+     * Get random instant between 3 days ago and 3 days later
      *
      * @return
      */
     private Instant getRandomInstant() {
         Instant now = Instant.now();
         if (Math.random() > 0.5) {
-            return now.plusSeconds(getRandomLong(30 * 24 * 3600));
+            return now.plusSeconds(getRandomLong(3 * 24 * 3600));
         } else {
-            return now.minusSeconds(getRandomLong(30 * 24 * 3600));
+            return now.minusSeconds(getRandomLong(3 * 24 * 3600));
         }
     }
 }

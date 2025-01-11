@@ -2,10 +2,12 @@ package com.capyjella.capydate.user.auth;
 
 
 import com.capyjella.capydate.user.auth.dto.LoginRequest;
-import com.capyjella.capydate.user.auth.dto.LoginResponse;
 import com.capyjella.capydate.user.auth.dto.SignupRequest;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -14,6 +16,11 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("auth")
 @RequiredArgsConstructor
 public class AuthenticationController {
+    @Value("${application.security.jwt.accessTokenCookieName}")
+    private String accessTokenCookieName;
+    @Value("${application.security.jwt.expiration}")
+    private int jwtTokenExpiration;
+
     private final AuthenticationService service;
 
     @PostMapping("/signup")
@@ -27,11 +34,17 @@ public class AuthenticationController {
 
     @PostMapping("/login")
     @ResponseStatus(HttpStatus.ACCEPTED)
-    public ResponseEntity<LoginResponse> login(
-            @RequestBody @Valid LoginRequest login
+    public ResponseEntity<?> login(
+            @RequestBody @Valid LoginRequest login,
+            HttpServletResponse response
     ) {
         String jwt = service.login(login);
-        var response = LoginResponse.builder().token(jwt).build();
-        return ResponseEntity.ok(response);
+        Cookie jwtCookie = new Cookie(accessTokenCookieName, jwt);
+        jwtCookie.setMaxAge(jwtTokenExpiration);
+        jwtCookie.setPath("/");
+        //jwtCookie.setSecure(true);
+        //jwtCookie.setHttpOnly(true);
+        response.addCookie(jwtCookie);
+        return ResponseEntity.ok().build();
     }
 }
