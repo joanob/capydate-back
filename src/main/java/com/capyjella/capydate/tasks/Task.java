@@ -26,6 +26,7 @@ public class Task extends BaseEntity {
     private Long date;
     private Long startTime;
     private Long endTime;
+    private String color;
 
     @ManyToOne
     private User user;

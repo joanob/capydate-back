@@ -60,4 +60,28 @@ public class TaskService {
         );
     }
 
+    public void modifyTask(Integer taskId, @Valid CreateTaskRequest request, User user) {
+        Task task = repository.findByIdAndDeletedFalse(taskId)
+                .orElseThrow(() -> new EntityNotFoundException(""));
+        if (task.getUser().getId() != user.getId()) {
+            throw new OperationNotPermitedException("");
+        }
+        task.setTitle(request.title());
+        task.setDescription(request.description());
+        task.setDate(request.date());
+        task.setStartTime(request.startTime());
+        task.setEndTime(request.endTime());
+        task.setColor(request.color());
+        repository.save(task);
+    }
+
+    public void setCompletedTask(Integer taskId, boolean completed, User user) {
+        Task task = repository.findByIdAndDeletedFalse(taskId)
+                .orElseThrow(() -> new EntityNotFoundException(""));
+        if (task.getUser().getId() != user.getId()) {
+            throw new OperationNotPermitedException("");
+        }
+        task.setCompleted(completed);
+        repository.save(task);
+    }
 }

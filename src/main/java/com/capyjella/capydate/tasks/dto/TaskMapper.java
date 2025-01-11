@@ -12,6 +12,7 @@ public class TaskMapper {
                 .date(request.date())
                 .startTime(request.startTime())
                 .endTime(request.endTime())
+                .color(request.color())
                 .build();
     }
 
@@ -24,6 +25,7 @@ public class TaskMapper {
                 .date(task.getDate())
                 .startTime(task.getStartTime())
                 .endTime(task.getEndTime())
+                .color(task.getColor())
                 .build();
     }
 }

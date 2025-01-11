@@ -19,4 +19,5 @@ public class TaskResponse extends BaseEntityResponse {
     private long date;
     private long startTime;
     private long endTime;
+    private String color;
 }

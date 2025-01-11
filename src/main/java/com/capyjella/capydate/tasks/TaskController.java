@@ -53,6 +53,34 @@ public class TaskController {
         return ResponseEntity.ok(service.getAllTasksInPeriod(startTime, endTime, page, size, (User) authentication.getPrincipal()));
     }
 
+    @PatchMapping("/{id}")
+    public ResponseEntity<Integer> modifyTask(
+            @PathVariable("id") Integer taskId,
+            @RequestBody @Valid CreateTaskRequest request,
+            Authentication authentication
+    ) {
+        service.modifyTask(taskId, request, (User) authentication.getPrincipal());
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/complete")
+    public ResponseEntity<Integer> completeTask(
+            @PathVariable("id") Integer taskId,
+            Authentication authentication
+    ) {
+        service.setCompletedTask(taskId, true, (User) authentication.getPrincipal());
+        return ResponseEntity.ok().build();
+    }
+
+    @PatchMapping("/{id}/complete/false")
+    public ResponseEntity<Integer> completeTaskFalse(
+            @PathVariable("id") Integer taskId,
+            Authentication authentication
+    ) {
+        service.setCompletedTask(taskId, false, (User) authentication.getPrincipal());
+        return ResponseEntity.ok().build();
+    }
+
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteTask(
             @PathVariable("id") Integer taskId,

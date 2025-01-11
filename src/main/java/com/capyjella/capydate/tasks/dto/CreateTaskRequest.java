@@ -13,6 +13,7 @@ public record CreateTaskRequest(
         // Tasks should have a date or and start and end time
         long date,
         long startTime,
-        long endTime
+        long endTime,
+        String color
 ) {
 }
