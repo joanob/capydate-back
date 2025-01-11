@@ -12,8 +12,6 @@ import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @SuperBuilder
@@ -26,12 +24,14 @@ public class BaseEntity {
     @GeneratedValue
     private Integer id;
 
+    private boolean deleted;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
+    private Long createdDate;
     @LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime lastModifiedDate;
+    private Long lastModifiedDate;
 
     @CreatedBy
     @Column(nullable = false, updatable = false)

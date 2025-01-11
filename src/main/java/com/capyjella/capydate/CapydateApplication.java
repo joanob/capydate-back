@@ -9,9 +9,10 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.data.jpa.repository.config.EnableJpaAuditing;
 import org.springframework.scheduling.annotation.EnableAsync;
 
+// Todas las fechas se tienen que almacenar en la base de datos como tipo Long, indicando el número de milisegundos epoch. La clase Instant permite gestionar las fechas y horas en Java
+
 @SpringBootApplication
 @EnableJpaAuditing(auditorAwareRef = "auditorAware")
-// auditorAware es el nombre del Bean en BeansConfig que devuelve ApplicationAuditAware
 @EnableAsync
 public class CapydateApplication {
 

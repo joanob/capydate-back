@@ -1,5 +1,6 @@
 package com.capyjella.capydate.user.user;
 
+import com.capyjella.capydate.tasks.Task;
 import com.capyjella.capydate.user.role.Role;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -15,7 +16,6 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.Principal;
-import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -41,13 +41,16 @@ public class User implements UserDetails, Principal {
 
     @CreatedDate
     @Column(nullable = false, updatable = false)
-    private LocalDateTime createdDate;
+    private Long createdDate;
     @LastModifiedDate
     @Column(insertable = false)
-    private LocalDateTime lastModifiedDate;
+    private Long lastModifiedDate;
 
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
+
+    @OneToMany(mappedBy = "user")
+    private List<Task> tareas;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

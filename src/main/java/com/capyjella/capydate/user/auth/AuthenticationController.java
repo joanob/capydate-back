@@ -1,6 +1,8 @@
 package com.capyjella.capydate.user.auth;
 
 
+import com.capyjella.capydate.user.auth.dto.LoginRequest;
+import com.capyjella.capydate.user.auth.dto.LoginResponse;
 import com.capyjella.capydate.user.auth.dto.SignupRequest;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,5 +23,15 @@ public class AuthenticationController {
     ) {
         service.signup(request);
         return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.ACCEPTED)
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody @Valid LoginRequest login
+    ) {
+        String jwt = service.login(login);
+        var response = LoginResponse.builder().token(jwt).build();
+        return ResponseEntity.ok(response);
     }
 }
