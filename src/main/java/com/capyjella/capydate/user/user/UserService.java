@@ -1,5 +1,7 @@
 package com.capyjella.capydate.user.user;
 
+import com.capyjella.capydate.user.user.dto.UserMapper;
+import com.capyjella.capydate.user.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -8,8 +10,9 @@ import org.springframework.stereotype.Service;
 public class UserService {
 
     private final UserRepository repository;
+    private final UserMapper mapper;
 
-    public User getUser(User user) {
-        return user;
+    public UserResponse getUser(User user) {
+        return mapper.toUserResponse(user);
     }
 }

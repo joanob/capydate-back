@@ -1,5 +1,6 @@
 package com.capyjella.capydate.user.user;
 
+import com.capyjella.capydate.user.user.dto.UserResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -15,7 +16,7 @@ public class UserController {
     private final UserService service;
 
     @GetMapping
-    public ResponseEntity<User> getUser(
+    public ResponseEntity<UserResponse> getUser(
             Authentication authentication
     ) {
         return ResponseEntity.ok(service.getUser((User) authentication.getPrincipal()));
