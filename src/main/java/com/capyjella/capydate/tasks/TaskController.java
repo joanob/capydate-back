@@ -1,6 +1,7 @@
 package com.capyjella.capydate.tasks;
 
 import com.capyjella.capydate.common.PageResponse;
+import com.capyjella.capydate.common.exceptions.IncorrectDataException;
 import com.capyjella.capydate.tasks.dto.CreateTaskRequest;
 import com.capyjella.capydate.tasks.dto.TaskResponse;
 import com.capyjella.capydate.user.user.User;
@@ -10,6 +11,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.Instant;
 
 @RestController
@@ -36,7 +40,9 @@ public class TaskController {
             @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
             Authentication authentication
     ) {
-        // Check year has four characters, month has 2 between 01 and 12 and day has 2 characters with values depending on month
+        if (!isDateValid(year, month, day)) {
+            throw new IncorrectDataException("Date " + year + "-" + month + "-" + day + " is not valid");
+        }
         Instant startTime = Instant.parse(year + "-" + month + "-" + day + "T00:00:00.00Z");
         Instant endTime = startTime.plusSeconds(24 * 3600);
         return ResponseEntity.ok(service.getAllTasksInPeriod(startTime, endTime, page, size, (User) authentication.getPrincipal()));
@@ -88,5 +94,16 @@ public class TaskController {
     ) {
         service.deleteTask(taskId, (User) authentication.getPrincipal());
         return ResponseEntity.ok().build();
+    }
+
+    private boolean isDateValid(String year, String month, String day) {
+        try {
+            DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+            dateFormat.setLenient(false);
+            dateFormat.parse(year + "-" + month + "-" + day);
+            return true;
+        } catch (ParseException e) {
+            return false;
+        }
     }
 }

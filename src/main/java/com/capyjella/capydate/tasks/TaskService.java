@@ -62,9 +62,9 @@ public class TaskService {
 
     public void modifyTask(Integer taskId, @Valid CreateTaskRequest request, User user) {
         Task task = repository.findByIdAndDeletedFalse(taskId)
-                .orElseThrow(() -> new EntityNotFoundException(""));
+                .orElseThrow(() -> new EntityNotFoundException("Task " + taskId + " not found"));
         if (task.getUser().getId() != user.getId()) {
-            throw new OperationNotPermitedException("");
+            throw new OperationNotPermitedException("Task " + taskId + " does not belong to user " + user.getId());
         }
         task.setTitle(request.title());
         task.setDescription(request.description());
@@ -77,9 +77,9 @@ public class TaskService {
 
     public void setCompletedTask(Integer taskId, boolean completed, User user) {
         Task task = repository.findByIdAndDeletedFalse(taskId)
-                .orElseThrow(() -> new EntityNotFoundException(""));
+                .orElseThrow(() -> new EntityNotFoundException("Task " + taskId + " not found"));
         if (task.getUser().getId() != user.getId()) {
-            throw new OperationNotPermitedException("");
+            throw new OperationNotPermitedException("Task " + taskId + " does not belong to user " + user.getId());
         }
         task.setCompleted(completed);
         repository.save(task);
