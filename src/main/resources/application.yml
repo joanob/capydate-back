@@ -15,5 +15,7 @@ server:
 application:
   security:
     jwt:
-      accessTokenCookieName: accessToken
-      refreshTokenCookieName: refreshToken
+      accessTokenCookieName: yobAuthToken
+  admin:
+    username: admin
+    password: admin

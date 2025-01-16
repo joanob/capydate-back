@@ -8,11 +8,11 @@
         <version>3.3.7</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>com.capyjella</groupId>
-    <artifactId>capydate</artifactId>
+    <groupId>com.joanob</groupId>
+    <artifactId>yourownboss</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>capydate</name>
-    <description>Cute planner and task management application</description>
+    <name>yourownboss</name>
+    <description>Be your own boss and create an empire</description>
     <url/>
     <licenses>
         <license/>
