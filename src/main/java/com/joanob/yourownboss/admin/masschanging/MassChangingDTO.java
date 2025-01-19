@@ -1,15 +1,15 @@
 package com.joanob.yourownboss.admin.masschanging;
 
 import com.joanob.yourownboss.resources.Resource;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.List;
 
 @Getter
 @Setter
 @Builder
+@NoArgsConstructor
+@AllArgsConstructor
 public class MassChangingDTO {
-    public List<Resource> resources;
+    private List<Resource> resources;
 }
