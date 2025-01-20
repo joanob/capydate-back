@@ -8,6 +8,11 @@ public record AdminResourceRequest(
         @NotNull()
         @NotEmpty()
         @NotBlank()
+        String id,
+
+        @NotNull()
+        @NotEmpty()
+        @NotBlank()
         String name
 ) {
 }

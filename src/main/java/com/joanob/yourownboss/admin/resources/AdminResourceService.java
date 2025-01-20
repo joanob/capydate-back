@@ -15,21 +15,22 @@ public class AdminResourceService {
 
     private final ResourceRepository repository;
 
-    public Integer createResource(@Valid AdminResourceRequest request, User user) {
+    public void createResource(@Valid AdminResourceRequest request, User user) {
         Resource resource = Resource.builder()
+                .id(request.id())
                 .name(request.name())
                 .build();
-        resource = repository.save(resource);
-        return resource.getId();
+        repository.save(resource);
     }
 
-    public void modifyResource(Integer resourceId, @Valid AdminResourceRequest request, User user) {
-        Resource resource = repository.findById(resourceId).orElseThrow(() -> new EntityNotFoundException("Resource " + resourceId + " not found"));
+    public void modifyResource(@Valid AdminResourceRequest request, User user) {
+        Resource resource = repository.findById(request.id()).orElseThrow(() -> new EntityNotFoundException("Resource " + request.id() + " not found"));
+
         resource.setName(request.name());
         repository.save(resource);
     }
 
-    public void deleteResource(Integer resourceId, User user) {
+    public void deleteResource(String resourceId, User user) {
         Resource resource = repository.findById(resourceId).orElseThrow(() -> new EntityNotFoundException("Resource " + resourceId + " not found"));
         repository.delete(resource);
     }

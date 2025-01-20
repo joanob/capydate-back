@@ -19,9 +19,9 @@ public class ResourceController {
     private final ResourceService service;
 
     @GetMapping
-    public ResponseEntity<PageResponse<ResourceResponse>> getAllTasksInDate(
+    public ResponseEntity<PageResponse<ResourceResponse>> getAllResources(
             @RequestParam(name = "page", defaultValue = "0", required = false) Integer page,
-            @RequestParam(name = "size", defaultValue = "10", required = false) Integer size,
+            @RequestParam(name = "size", defaultValue = "1000", required = false) Integer size,
             Authentication authentication
     ) {
         return ResponseEntity.ok(service.getAllResources(page, size, (User) authentication.getPrincipal()));

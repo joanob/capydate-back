@@ -1,6 +1,5 @@
 package com.joanob.yourownboss.resources.dto;
 
-import com.joanob.yourownboss.common.BaseEntityResponse;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -12,6 +11,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 @AllArgsConstructor
 @NoArgsConstructor
-public class ResourceResponse extends BaseEntityResponse {
+public class ResourceResponse {
+    private String id;
     private String name;
 }

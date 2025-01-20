@@ -16,26 +16,26 @@ public class AdminResourceController {
     private final AdminResourceService service;
 
     @PostMapping
-    public ResponseEntity<Integer> createTask(
+    public ResponseEntity<?> createResource(
             @RequestBody @Valid AdminResourceRequest request,
             Authentication authentication
     ) {
-        return ResponseEntity.ok(service.createResource(request, (User) authentication.getPrincipal()));
+        service.createResource(request, (User) authentication.getPrincipal());
+        return ResponseEntity.ok().build();
     }
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<Integer> modifyResource(
-            @PathVariable("id") Integer resourceId,
+    @PatchMapping
+    public ResponseEntity<?> modifyResource(
             @RequestBody @Valid AdminResourceRequest request,
             Authentication authentication
     ) {
-        service.modifyResource(resourceId, request, (User) authentication.getPrincipal());
+        service.modifyResource(request, (User) authentication.getPrincipal());
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Integer> modifyResource(
-            @PathVariable("id") Integer resourceId,
+    public ResponseEntity<?> deleteResource(
+            @PathVariable("id") String resourceId,
             Authentication authentication
     ) {
         service.deleteResource(resourceId, (User) authentication.getPrincipal());

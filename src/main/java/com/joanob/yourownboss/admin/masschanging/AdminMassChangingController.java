@@ -19,7 +19,6 @@ import java.time.ZoneOffset;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-// https://stackoverflow.com/questions/44261069/how-to-download-response-as-a-json-file-created-from-java-object
 @RestController
 @RequestMapping("admin/mass")
 @RequiredArgsConstructor
@@ -39,10 +38,10 @@ public class AdminMassChangingController {
 
         OffsetDateTime now = Instant.now().atOffset(ZoneOffset.UTC);
 
-        String filename = "YOB-" + now.format(DateTimeFormatter.ISO_INSTANT);
+        String filename = "YOB-" + now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss"));
 
         return ResponseEntity.ok()
-                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + "\"")
+                .header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + filename + ".json\"")
                 .contentLength(jsonBytes.length)
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(jsonBytes);
