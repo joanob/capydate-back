@@ -9,6 +9,7 @@ public class ProductionBuildingMapper {
         return ProductionBuildingResponse.builder()
                 .id(productionBuilding.getId())
                 .name(productionBuilding.getName())
+                .processes(productionBuilding.getProcesses())
                 .build();
     }
 }

@@ -1,16 +1,15 @@
 package com.joanob.yourownboss.productionBuildings;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-import lombok.experimental.SuperBuilder;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import jakarta.persistence.*;
+import lombok.*;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
-@SuperBuilder
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -18,4 +17,18 @@ public class ProductionBuilding {
     @Id
     private String id;
     private String name;
+
+    @OneToMany(mappedBy = "productionBuilding", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
+    private List<ProductionProcess> processes = new ArrayList<>();
+
+    public void addProcess(ProductionProcess process) {
+        process.setProductionBuilding(this);
+        processes.add(process);
+    }
+
+    public void removeProcess(ProductionProcess process) {
+        process.setProductionBuilding(null);
+        processes.remove(process);
+    }
 }
