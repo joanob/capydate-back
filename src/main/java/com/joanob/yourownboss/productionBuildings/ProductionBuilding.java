@@ -31,4 +31,13 @@ public class ProductionBuilding {
         process.setProductionBuilding(null);
         processes.remove(process);
     }
+
+    public void modifyAllProcesses(List<ProductionProcess> processes) {
+        // Add new processes
+        for (ProductionProcess process : processes) {
+            if (this.processes.stream().filter(p -> p.getId().contentEquals(process.getId())).count() == 0) {
+                this.addProcess(process);
+            }
+        }
+    }
 }

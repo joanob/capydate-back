@@ -30,6 +30,7 @@ public class AdminProductionBuildingService {
 
         ProductionBuilding modifiedProductionBuilding = mapper.toProductionBuilding(request);
         productionBuilding.setName(modifiedProductionBuilding.getName());
+        productionBuilding.modifyAllProcesses(modifiedProductionBuilding.getProcesses());
 
         buildingRepository.save(productionBuilding);
     }
