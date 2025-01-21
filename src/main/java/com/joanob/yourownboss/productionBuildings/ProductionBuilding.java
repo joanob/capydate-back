@@ -39,5 +39,16 @@ public class ProductionBuilding {
                 this.addProcess(process);
             }
         }
+
+        // Remove processes
+        List<ProductionProcess> deletedProcesses = new ArrayList<>();
+        for (ProductionProcess process : this.processes) {
+            if (processes.stream().filter(p -> p.getId().contentEquals(process.getId())).count() == 0) {
+                deletedProcesses.add(process);
+            }
+        }
+        for (ProductionProcess process : deletedProcesses) {
+            this.removeProcess(process);
+        }
     }
 }
