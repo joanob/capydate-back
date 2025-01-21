@@ -33,10 +33,14 @@ public class ProductionBuilding {
     }
 
     public void modifyAllProcesses(List<ProductionProcess> processes) {
-        // Add new processes
         for (ProductionProcess process : processes) {
-            if (this.processes.stream().filter(p -> p.getId().contentEquals(process.getId())).count() == 0) {
+            ProductionProcess existingProcess = this.processes.stream().filter(p -> p.getId().contentEquals(process.getId())).findFirst().orElse(null);
+            if (existingProcess == null) {
+                // Add new processes
                 this.addProcess(process);
+            } else {
+                // Modify process
+                existingProcess.setName(process.getName());
             }
         }
 
